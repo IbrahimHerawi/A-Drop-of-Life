@@ -1,0 +1,56 @@
+/* Hero Section */
+.hero-section {
+    background: url('/static/icons/pages/home/hero-section.jpeg') no-repeat center;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
+.hero-section::before {
+    background-color: rgba(0, 0, 0, 0.6);
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.hero-section .container {
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+    top: 20%;
+}
+/* Hero Section */
+
+/* blood types */
+.section-title, .card h5 {
+    color: var(--clr-theme);
+}
+
+.section-line {
+    border-top: 3px solid var(--clr-theme);
+    width: 13rem;
+    margin: auto;
+    margin-bottom: 25px;
+}
+/* blood types */
+
+/* blood group search */
+.search-btn {
+    border: none;
+    border-radius: 100px;
+    background-color: var(--clr-theme);
+    color: white;
+    font-size: 1rem;
+    padding: 10px 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s background-color;
+}
+
+.search-btn:hover {
+    background-color: #ff002686;
+}
+/* blood group search */

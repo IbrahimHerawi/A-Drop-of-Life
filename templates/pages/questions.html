@@ -1,0 +1,33 @@
+{% extends "shared/_general_base.html" %}
+{% load static %}
+
+{% block title %}Questions{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/pages/questions.css' %}">
+{% endblock head %}
+
+
+{% block content %}
+<!-- Hero section start -->
+<section id="hero-section">
+    <div class="hero-section">
+        <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
+            <h2>Common Asked Questions</h2>
+        </div>
+    </div>
+</section>
+<!-- Hero section end -->
+
+<!-- Qeustions section start -->
+<section id="questions-section">
+    <div
+        class="container d-flex flex-column justify-content-center align-items-center questions-container mt-5 js-questions-container">
+    </div>
+</section>
+<!-- Qeustions section end -->
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'scripts/pages/questions.js' %}"></script>
+{% endblock script %}

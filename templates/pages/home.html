@@ -1,0 +1,158 @@
+{% extends "shared/_general_base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/pages/home.css' %}">
+{% endblock head %}
+
+{% block content %}
+<!-- Hero section start -->
+<section id="hero-section">
+    <div class="hero-section">
+        <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
+            <h2>Donate Blood. Save Lives.</h2>
+            <h5>You can make a lifesaving difference</h5>
+        </div>
+    </div>
+</section>
+<!-- Hero section end -->
+
+<!-- Blood types section start -->
+<section id="blood-types-section">
+    <div class="container my-5">
+        <h3 class="text-center section-title">Blood Types</h3>
+        <hr class="section-line">
+        <div class="row row-gap-4 d-flex justify-content-center">
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="card border-0">
+                    <img src="{% static 'icons/pages/home/o+.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">O Positive</h5>
+                        <p class="card-text fw-medium">O Positive is the most common blood type</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="card border-0">
+                    <img src="{% static 'icons/pages/home/o-.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">O Negative</h5>
+                        <p class="card-text fw-medium">O Negative donors are often called &#39universal donors&#39
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="card border-0">
+                    <img src="{% static 'icons/pages/home/a+.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">A Positive</h5>
+                        <p class="card-text fw-medium">A Positive is the second common blood type</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="card border-0">
+                    <img src="{% static 'icons/pages/home/a-.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">A Negative</h5>
+                        <p class="card-text fw-medium">A Negative is the universal platelet type</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="card border-0">
+                    <img src="{% static 'icons/pages/home/b+.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">B Positive</h5>
+                        <p class="card-text fw-medium">Only 8&#37; of donors are B Positive but there is always a
+                            need
+                            for it</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="card border-0">
+                    <img src="{% static 'icons/pages/home/b-.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">B Negative</h5>
+                        <p class="card-text fw-medium">Just 2&#37; of donors are B Negative&#44; making one of the
+                            rarest blood
+                            types</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="card border-0">
+                    <img src="{% static 'icons/pages/home/ab+.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">AB Positive</h5>
+                        <p class="card-text fw-medium">Around 2&#37; of donors have AB Positive blood</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="card border-0">
+                    <img src="{% static 'icons/pages/home/ab-.png' %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">AB Negative</h5>
+                        <p class="card-text fw-medium">AB Negative is the rarest of the 8 main blood types</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blood types section end -->
+
+<!-- donation reason section start -->
+<section id="donation-reason-section">
+    <hr>
+    <div class="container mt-5">
+        <div class="row row-gap-2 d-flex justify-content-center align-items-center">
+            <div class="col-10 col-lg-6">
+                <h4 class="text-center mb-3" style="color: var(--clr-theme);">Why donate blood&#63;</h4>
+                <p class="fw-medium lh-base">&bull; Blood is the most precious gift that anyone can give to another
+                    person&#44; it is the gift of life.
+                </p>
+                <p class="fw-medium lh-base">&bull;
+                    A decision to donate your blood can save a life, or even several.
+                </p>
+                <p class="fw-medium lh-base">&bull;
+                    Regular blood donation by a
+                    sufficient number of healthy people is needed to ensure that blood will always be available
+                    whenever and wherever it is needed.
+                </p>
+            </div>
+            <div class="col-10 col-lg-6">
+                <img src="{% static 'icons/pages/home/donation-reason.jpeg' %}" class="img-fluid rounded-4">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- donation reason section end -->
+
+<!-- Search a blood group start  -->
+<section id="search-blood-group">
+    <hr>
+    <div class="container mt-5">
+        <div class="row row-gap-4 d-flex justify-content-center align-items-center">
+            <div class="col-10 col-lg-6">
+                <h4 class="text-center mb-3" style="color: var(--clr-theme);">Looking for a Specific Blood Type&#63;
+                </h4>
+                <p class="fw-medium lh-base text-center">In a moment you would know where we can provide you the
+                    required amount
+                    of the blood group you
+                    are looking for</p>
+            </div>
+            <div class="col-10 col-lg-6 d-flex row-gap-5 justify-content-center align-items-center flex-column">
+                <img src="{% static 'icons/pages/home/blood-bag.png' %}" class="d-block img-fluid m-auto" width="85px">
+                <a href="" class="search-btn">Look For</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Search a blood group end  -->
+{% endblock content %}

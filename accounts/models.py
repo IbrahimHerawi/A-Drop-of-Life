@@ -51,9 +51,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
+    # the manager to interact with the model
     objects = CustomUserManager()
 
+    # which field is used for loging in
     USERNAME_FIELD = "email"
+
+    # required fields when creating an instance
     REQUIRED_FIELDS = []
 
     def __str__(self):

@@ -1,0 +1,135 @@
+<!--General base template that includes the header and the footer to be expanded by other templates-->
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <!-- Fonts -->
+
+    <!-- Bootstrap & Style -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/pages/_general_base.css' %}">
+    <!-- Bootstrap & Style -->
+
+    {% block head %}{% endblock head %}
+
+</head>
+
+<body>
+
+    <!--Navbar start-->
+    <header>
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'icons/pages/shared/logo.png' %}" alt="Logo" width="41px"
+                        class="d-inline-block rounded-pill">
+                </a>
+                <a class="navbar-brand me-auto align-text-top" href="{% url 'home' %}">
+                    A Drop of Life
+                </a>
+
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">A Drop of Life</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" aria-current="page" href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li class="nav-item mx-lg-2">
+                                <a class="nav-link" href="#">Look For</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="{% url 'aboutus' %}">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="{% url 'questions' %}">Questions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#" class="login-button">Login</a>
+                <button class="navbar-toggler pb-2" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    <!--Navbar end-->
+
+
+    {% block content %}{% endblock content %}
+
+
+    <!--Footer start-->
+    <footer class="text-center text-white mt-5">
+        <hr>
+        <!-- Grid container -->
+        <div
+            class="container p-4 pb-0 d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-baseline ">
+
+            <!--Footer logo-->
+            <section class="footer-logo">
+                <img src="{% static 'icons/pages/shared/logo.png' %}" width="80px" class="img-fluid">
+            </section>
+            <!--Footer logo-->
+
+
+            <!--Footer title-->
+            <section class="footer-title">
+                <h5>A Drop of Life Web Application</h3>
+                    <p>For Better Management of a Blood Bank</p>
+            </section>
+            <!--Footer title-->
+
+            <!--Social media-->
+            <section class="social-icons my-3">
+                <!-- Facebook -->
+                <a href="#!"><img class="mx-2 social-icon" src="{% static 'icons/pages/shared/facebook.png' %}"></a>
+
+                <!-- Twitter -->
+                <a href="#!"><img class="mx-2 social-icon" src="{% static 'icons/pages/shared/twitter.png' %}"></a>
+
+                <!--Linkedin-->
+                <a href="#!"><img class="mx-2 social-icon" src="{% static 'icons/pages/shared/linkedin.png' %}"></a>
+
+                <!-- Instagram -->
+                <a href="#!"><img class="mx-2 social-icon" src="{% static 'icons/pages/shared/instagram.png' %}"></a>
+            </section>
+            <!--Social media-->
+        </div>
+        <!-- Grid container -->
+
+        <!--Copyright-->
+        <div class="text-center p-3 copy-right" style="font-size: 0.8rem;">
+            © 2024 Copyright:
+            <a class="text-white" href="{% url 'home' %}">A Drop of Life</a>
+        </div>
+        <!--Copyright-->
+    </footer>
+    <!--Footer end-->
+
+    <!-- Bootstrap & Scripts -->
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    {% block script %}{% endblock script %}
+    <!-- Bootstrap -->
+
+</body>
+
+</html>
