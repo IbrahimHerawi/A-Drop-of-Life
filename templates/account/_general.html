@@ -1,0 +1,23 @@
+{% extends "shared/_general_base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/account/general.css' %}">
+{% endblock head %}
+
+
+{% block content %}
+<!-- Hero section start -->
+<section id="hero-section">
+    <div class="hero-section">
+        <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
+            <h2>{% block hero %}{% endblock hero %}</h2>
+        </div>
+    </div>
+</section>
+<!-- Hero section end -->
+
+{% block section %}{% endblock section %}
+
+{% endblock content %}
