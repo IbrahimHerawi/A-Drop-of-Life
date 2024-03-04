@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Local
     "accounts",
     "pages",
+    "bloodbank",
 ]
 
 MIDDLEWARE = [
