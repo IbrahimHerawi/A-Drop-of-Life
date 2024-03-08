@@ -1,0 +1,22 @@
+.container h4 {
+    color: var(--clr-theme);
+}
+
+
+.card-title {
+    color: var(--clr-theme);
+    font-weight: bold;
+}
+
+.card {
+    padding: 10px;
+    border: solid 2px var(--clr-theme);
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px inset var(--clr-theme);
+}
+
+.card:hover {
+    background-color:#ff002628;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+}

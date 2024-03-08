@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <!-- Fonts -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'icons/fontawesome-icons/css/all.css' %}">
+    <!-- Font Awesome -->
+
+    <!-- Bootstrap & Style -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/bloodbank/_general.css' %}">
+    <!-- Bootstrap & Style -->
+
+    {% block head %}{% endblock head %}
+
+</head>
+
+<body>
+
+    <!--Sidebar & Content start-->
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <!-- Sidebar start -->
+            <div class="sidebar col-auto d-flex flex-column justify-content-start">
+                <a href="{% url 'home' %}" class="d-flex align-items-center text-decoration-none fw-bold mt-sm-3 mt-3">
+                    <img src="{% static 'icons/pages/shared/logo.png' %}" class="img-fluid sidebar-logo">
+                    <span class="fs-5 ms-2 d-none d-sm-inline">A Drop of Life</span>
+                </a>
+                <ul class="nav nav-pills flex-column mt-sm-3 mt-0">
+                    <li class="nav-item py-2 py-sm-0">
+                        <a href="{% url 'dashboard' %}" class="nav-link">
+                            <i class="fs-5 fa-solid fa-gauge"></i><span
+                                class="fs-6 ms-3 d-none d-sm-inline">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item py-2 py-sm-0">
+                        <a href="" class="nav-link">
+                            <i class="fs-4 fa-solid fa-droplet"></i><span class="fs-6 ms-3 d-none d-sm-inline">Blood
+                                Groups</span>
+                        </a>
+                    </li>
+                    <li class="nav-item py-2 py-sm-0">
+                        <a href="" class="nav-link">
+                            <i class="fs-5 fa-solid fa-heart-circle-plus"></i><span
+                                class="fs-6 ms-3 d-none d-sm-inline">Donations</span>
+                        </a>
+                    </li>
+                    <li class="nav-item py-2 py-sm-0">
+                        <a href="" class="nav-link">
+                            <i class="fs-5 fa-solid fa-heart-circle-minus"></i><span
+                                class="fs-6 ms-3 d-none d-sm-inline">Requests</span>
+                        </a>
+                    </li>
+                    <li class="nav-item py-2 py-sm-0">
+                        <a href="" class="nav-link">
+                            <i class="fs-4 fa-solid fa-user"></i><span
+                                class="fs-6 ms-3 d-none d-sm-inline">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item py-2 py-sm-0">
+                        <a href="{% url 'account_change_password' %}" class="nav-link">
+                            <i class="fs-5 fa-solid fa-key mx-auto"></i><span
+                                class="fs-6 ms-3 d-none d-sm-inline">Password
+                                Change</span>
+                        </a>
+                    </li>
+                    <li class="nav-item py-2 py-sm-0">
+                        <a href="{% url 'account_logout' %}" class="nav-link">
+                            <i class="fs-5 fa-solid fa-right-from-bracket mx-auto"></i><span
+                                class="fs-6 ms-3 d-none d-sm-inline">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--Sidebar end -->
+            <!-- Content start -->
+            <div class="content p-3 col px-4">
+                <div class="d-flex flex-row justify-content-between mb-4">
+                    <div class="flex-nowrap">
+                        <p class="fw-medium">{% block path %}{% endblock path %}</p>
+                    </div>
+                    <div class="flex-nowrap">
+                        <p class="fw-medium"><i class="fa-solid fa-user me-2"></i>Welcome {{ user.username}}</p>
+                    </div>
+                </div>
+                {% block content %}{% endblock content %}
+            </div>
+            <!-- Content end -->
+        </div>
+    </div>
+    <!--Sidebar & Content end -->
+
+
+
+    <!-- Bootstrap & Scripts -->
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    {% block script %}{% endblock script %}
+    <!-- Bootstrap -->
+
+</body>
+
+</html>

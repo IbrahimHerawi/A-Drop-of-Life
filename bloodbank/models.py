@@ -23,24 +23,24 @@ class BloodGroup(models.Model):
         ],
     )
 
-    def calculate_volume(self):
+    @property
+    def available_volume(self):
         try:
             amount = (
                 Donation.objects.exclude(status=2)
                 .filter(blood_group=self.id)
                 .aggregate(models.Sum("residual_volume"))
             )
-            if amount is None:
+
+            if amount["residual_volume__sum"] is None:
                 amount = 0
                 return amount
 
-            return amount
+            return amount["residual_volume__sum"]
 
         except:
             amount = 0
             return amount
-
-    available_volume = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.group_name

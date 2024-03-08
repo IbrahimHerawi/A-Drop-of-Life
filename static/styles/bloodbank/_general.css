@@ -1,0 +1,50 @@
+:root {
+    --clr-theme: #ff0026;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.row {
+    background-color: rgb(240, 242, 245);
+}
+
+/* Sidebar */
+.sidebar {
+    margin-top: 10px;
+    background-color: white;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    height: 96vh;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgb(187, 187, 187);
+}
+
+.sidebar span, i{
+    color: var(--clr-theme);
+    font-weight: bold;
+    font-family: "Roboto", "Arial";
+    font-size: 1.2rem;
+}
+
+.nav-pills li a:hover {
+    background-color: rgba(240, 242, 245, 0.8);
+}
+
+.sidebar-logo {
+    width: 50px;
+    min-width: 40px;
+}
+/* Sidebar */
+
+
+
+/* Content */
+.content {
+    background-color: white;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgb(187, 187, 187);
+}
+/* Content */

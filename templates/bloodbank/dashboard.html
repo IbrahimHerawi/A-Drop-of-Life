@@ -1,0 +1,36 @@
+{% extends 'bloodbank/_general.html' %}
+
+{% load static %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block path %}Manager / Dashboard {% endblock path %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/bloodbank/dashboard.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+<section>
+    <div class="container">
+        <h4 class="mb-4">Blood Groups</h4>
+        <div class="row row-gap-3 justify-content-center bg-white">
+            {% for bg in object_list %}
+            <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-center mb-3 text-uppercase"> <i class="fs-5 fa-solid fa-droplet"></i>
+                            {{bg.group_name}}</h4>
+                        <p class="card-text fw-medium">Available Volume is:<span class="fw-bold text-nowrap fs-5">
+                                {{bg.available_volume}}
+                                &dash; L</span></p>
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+</section>
+
+{% endblock content %}
