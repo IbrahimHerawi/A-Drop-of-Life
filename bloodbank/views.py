@@ -10,3 +10,8 @@ from .models import (
 class DashboardView(ListView):
     model = BloodGroup
     template_name = "bloodbank/dashboard.html"
+
+
+class BloodGroupsView(ListView):
+    model = BloodGroup
+    template_name = "bloodbank/bloodgroups.html"

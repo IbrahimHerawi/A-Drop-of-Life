@@ -1,0 +1,38 @@
+{% extends 'bloodbank/_general.html' %}
+
+{% load static %}
+
+{% block title %}Blood Groups{% endblock title %}
+
+{% block path %}Blood Groups{% endblock path %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/bloodbank/bloodgroups.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+<section>
+    <div>
+        <h4 class="page-title mb-4">Blood Groups</h4>
+        <table class="table table-hover text-center table-responsive">
+            <thead>
+                <th style="color: var(--clr-theme);" scope="col">ID</th>
+                <th style="color: var(--clr-theme);" scope="col">Group Name</th>
+                <th style="color: var(--clr-theme);" scope="col">Available Volume</th>
+            </thead>
+            <tbody>
+                {% for bg in object_list %}
+                <tr>
+                    <td scope="row">{{bg.id}}</td>
+                    <td class="text-uppercase">{{bg.group_name}}</td>
+                    <td>{{bg.available_volume}} &dash; L</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+{% endblock content %}

@@ -38,9 +38,11 @@
 }
 /* Sidebar */
 
-
-
 /* Content */
+.page-title {
+    color: var(--clr-theme);
+}
+
 .content {
     background-color: white;
     margin: 10px;
@@ -48,3 +50,30 @@
     box-shadow: 0 0 15px rgb(187, 187, 187);
 }
 /* Content */
+
+/* Form Section */
+.form-content input:focus {
+    box-shadow: 0px 0px 7px var(--clr-theme);    
+}
+
+.form-content label {
+    color: var(--clr-theme);
+    font-weight: 500;
+}
+
+.submit-btn {
+    background-color: var(--clr-theme);
+    color: white;
+    border: none;
+    border-radius: 60px; 
+    padding: 8px 20px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+}
+
+.submit-btn:hover {
+    background-color: #ff0026c2;
+}
+
+/* Form Section */

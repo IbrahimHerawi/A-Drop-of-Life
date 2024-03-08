@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'icons/pages/shared/logo.png' %}">
     <title>{% block title %}{% endblock title %}</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +48,7 @@
                         </a>
                     </li>
                     <li class="nav-item py-2 py-sm-0">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'bloodgroups' %}" class="nav-link">
                             <i class="fs-4 fa-solid fa-droplet"></i><span class="fs-6 ms-3 d-none d-sm-inline">Blood
                                 Groups</span>
                         </a>
@@ -65,7 +66,7 @@
                         </a>
                     </li>
                     <li class="nav-item py-2 py-sm-0">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'profile' user.id %}" class="nav-link">
                             <i class="fs-4 fa-solid fa-user"></i><span
                                 class="fs-6 ms-3 d-none d-sm-inline">Profile</span>
                         </a>
@@ -90,7 +91,8 @@
             <div class="content p-3 col px-4">
                 <div class="d-flex flex-row justify-content-between mb-4">
                     <div class="flex-nowrap">
-                        <p class="fw-medium">{% block path %}{% endblock path %}</p>
+                        <p class="fw-medium">Manager / <span class="text-nowrap">
+                                {% block path %}{% endblock path%}</span></p>
                     </div>
                     <div class="flex-nowrap">
                         <p class="fw-medium"><i class="fa-solid fa-user me-2"></i>Welcome {{ user.username}}</p>
