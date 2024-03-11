@@ -1,0 +1,20 @@
+{% extends 'bloodbank/general/_general.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Add Donation{% endblock title %}
+
+{% block path %}Add Donation{% endblock path %}
+
+{% block content %}
+
+<section>
+    <h4 class="page-title mb-4">Add Donation</h4>
+    <form method="post" class="container mt-5 form-content" novalidate> {%csrf_token %}
+        {{form|crispy}}
+        <button class="submit-btn" type="submit">Add</button>
+    </form>
+</section>
+
+{% endblock content %}

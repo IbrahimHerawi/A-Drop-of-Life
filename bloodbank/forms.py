@@ -1,19 +1,9 @@
 from django import forms
 
 from .models import (
-    BloodGroup,
     Donation,
     Request,
 )
-
-
-class BloodGroupForm(forms.ModelForm):
-    class Meta:
-        model = BloodGroup
-        fields = [
-            "group_name",
-            "available_volume",
-        ]
 
 
 class DonationForm(forms.ModelForm):

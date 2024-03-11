@@ -1,0 +1,94 @@
+{% extends 'bloodbank/general/_general.html' %}
+
+{% load static %}
+
+{% block title %}Donations{% endblock title %}
+
+{% block path %}Donations{% endblock path %}
+
+{% block content %}
+
+<section>
+    <div class="d-flex flex-column flex-sm-row justify-content-between mb-4">
+        <div class="mb-4">
+            <h4 class="page-title">Donations</h4>
+        </div>
+        <div>
+            <a href="{% url 'donation-new' %}" class="general-btn"><i class="fs-6 fa-solid fa-plus"></i> Add New</a>
+        </div>
+    </div>
+
+    <!-- Search Form -->
+    <form class="d-flex flex-column flex-lg-row justify-content-between form-content row-gap-4" method="get"
+        action="{% url 'donation-list' %}" id="donation">
+
+        <div class="flex-grow-1">
+            <input type="search" class="form-control" name="q" placeholder="Enter Donor Name!" aria-label="Search">
+        </div>
+        <div class="flex-grow-1 align-items-center justify-content-center d-flex flex-row column-gap-3">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="statusall" value="0" checked>
+                <label class="form-check-label" for="statusall">
+                    All
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="statusvalid" value="1">
+                <label class="form-check-label" for="statusvalid">
+                    Valid
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="statusinvalid" value="2">
+                <label class="form-check-label" for="statusinvalid">
+                    Invalid
+                </label>
+            </div>
+        </div>
+        <div class="flex-grow-1 text-center">
+            <input type="submit" class="submit-btn flex-grow-1 w-75" value="Search">
+        </div>
+    </form>
+    <!-- Search Form -->
+
+    <!-- Table -->
+    <div class="table-responsive mt-3">
+        <table class="table table-hover text-center table-responsive mt-4">
+            <thead>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Age</th>
+                <th scope="col">Blood Group</th>
+                <th scope="col">Volume</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+            </thead>
+            <tbody>
+                {% for d in object_list %}
+                <tr>
+                    <td>{{d.donor_name}}</td>
+                    <td>{{d.donor_phone}}</td>
+                    <td>{{d.donor_gender}}</td>
+                    <td>{{d.donor_age}}</td>
+                    <td>{{d.blood_group.group_name}}</td>
+                    <td>{{d.donation_volume}} &dash; L</td>
+                    {% if d.status == '1' %}
+                    <td>Valid</td>
+                    {% else %}
+                    <td>Invalid</td>
+                    {% endif %}
+                    <td><a href="{% url 'donation-detail' d.pk %}" style="color: var(--clr-theme);">Details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Table -->
+</section>
+
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'scripts/bloodbank/donation.js' %}"></script>
+{% endblock script %}

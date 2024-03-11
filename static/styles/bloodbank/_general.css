@@ -3,6 +3,7 @@
 }
 
 * {
+    font-family: "Roboto", Arial;
     box-sizing: border-box;
 }
 
@@ -70,10 +71,29 @@
     font-size: 14px;
     text-decoration: none;
     transition: 0.3s background-color;
+    font-weight: bold;
 }
 
 .submit-btn:hover {
     background-color: #ff0026c2;
 }
-
 /* Form Section */
+
+/* General Button */
+.general-btn {
+    background-color: white;
+    color: var(--clr-theme);
+    border: solid 2px var(--clr-theme);
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
+    font-family: "Roboto";
+    font-size: 14px;
+    transition: 0.4s background-color;
+}
+
+.general-btn:hover {
+    background-color: #ff00262a; 
+}
+/* General Button */

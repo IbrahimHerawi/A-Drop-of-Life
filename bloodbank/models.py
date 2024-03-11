@@ -4,6 +4,7 @@ from django.core.validators import (
     MinValueValidator,
     MaxValueValidator,
 )
+from django.urls import reverse
 
 
 # Blood Group Table
@@ -78,8 +79,12 @@ class Donation(models.Model):
     def save(self, *args, **kwargs):
         if not self.residual_volume:
             self.residual_volume = self.donation_volume
+            self.status = "1"
 
         super(Donation, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("donation-detail", kwargs={"pk": self.pk})
 
 
 # Requests Table

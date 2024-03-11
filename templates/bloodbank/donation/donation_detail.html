@@ -1,0 +1,69 @@
+{% extends 'bloodbank/general/_general.html' %}
+
+{% load static %}
+
+{% block title %}Donation Details{% endblock title %}
+
+{% block path %}Donation Details{% endblock path %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/bloodbank/detail.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+<section>
+    <div class="d-flex flex-column flex-md-row justify-content-between">
+        <div class="flex-nowrap mb-4">
+            <h4 class="page-title">Donation Details</h4>
+        </div>
+        <div class="flex-nowrap">
+            <a href="{% url 'donation-edit' object.pk %}" class="general-btn">Edit</a>
+            <a href="{% url 'donation-delete' object.pk %}" class="general-btn">Delete</a>
+        </div>
+    </div>
+    <div class="container">
+        <h4 class="label">Name</h4>
+        <p class="data">{{object.donor_name}}</p>
+
+        <h4 class="label">Phone</h4>
+        <p class="data">{{object.donor_phone}}</p>
+
+        <h4 class="label">Email</h4>
+        <p class="data">{{object.donor_email}}</p>
+
+        <h4 class="label">Gender</h4>
+        <p class="data">{{object.donor_gender}}</p>
+
+        <h4 class="label">Age</h4>
+        <p class="data">{{object.donor_age}}</p>
+
+        <h4 class="label">Address</h4>
+        {% if object.donor_address == '' %}
+        <p class="data">Not Available</p>
+        {% else %}
+        <p class="data">{{object.donor_address}}</p>
+        {% endif %}
+
+        <h4 class="label">Blood Group</h4>
+        <p class="data">{{object.blood_group.group_name}}</p>
+
+        <h4 class="label">Volume</h4>
+        <p class="data">{{object.donation_volume}} &dash; L</p>
+
+        <h4 class="label">Residual Volume</h4>
+        <p class="data">{{object.residual_volume}} &dash; L</p>
+
+        <h4 class="label">Trnasfusion Date</h4>
+        <p class="data">{{object.transfusion_date}}</p>
+
+        <h4 class="label">Status</h4>
+        {% if object.status == '1' %}
+        <p class="data">Valid</p>
+        {% else %}
+        <p class="data">Invalid</p>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock content %}
