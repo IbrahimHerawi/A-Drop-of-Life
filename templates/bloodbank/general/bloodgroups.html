@@ -11,18 +11,41 @@
 <section>
     <div>
         <h4 class="page-title mb-4">Blood Groups</h4>
-        <table class="table table-hover text-center table-responsive">
+        <!-- Search Form -->
+        <form class="d-flex flex-column flex-lg-row justify-content-between form-content row-gap-4 column-gap-2"
+            method="get" action="{% url 'bloodgroups' %}" id="donation">
+
+            <div class="flex-grow-1">
+                <label for="begin">From</label>
+                <input type="date" class="form-control mt-1" name="begin" id="begin">
+            </div>
+
+            <div class="flex-grow-1">
+                <label for="end">To</label>
+                <input type="date" class="form-control mt-1" name="end" id="end">
+            </div>
+
+            <div class="flex-grow-1 text-center align-self-lg-end">
+                <input type="submit" class="submit-btn flex-grow-1 w-75" value="Search">
+            </div>
+        </form>
+        <!-- Search Form -->
+        <table class="table table-hover text-center table-responsive mt-4">
             <thead>
                 <th style="color: var(--clr-theme);" scope="col">ID</th>
                 <th style="color: var(--clr-theme);" scope="col">Group Name</th>
-                <th style="color: var(--clr-theme);" scope="col">Available Volume</th>
+                <th style="color: var(--clr-theme);" scope="col">Donations</th>
+                <th style="color: var(--clr-theme);" scope="col">Requests</th>
+
             </thead>
             <tbody>
                 {% for bg in object_list %}
                 <tr>
                     <td scope="row">{{bg.id}}</td>
                     <td class="text-uppercase">{{bg.group_name}}</td>
-                    <td>{{bg.available_volume}} &dash; L</td>
+                    <td>{{bg.donations}}</td>
+                    <td>{{bg.requests}}</td>
+
                 </tr>
                 {% endfor %}
             </tbody>

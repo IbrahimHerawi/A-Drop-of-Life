@@ -1,3 +1,4 @@
+from django.db import models
 from django.views.generic import (
     ListView,
     DetailView,
@@ -29,6 +30,67 @@ class DashboardView(ListView):
 class BloodGroupsView(ListView):
     model = BloodGroup
     template_name = "bloodbank/general/bloodgroups.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        begin = self.request.GET.get("begin")
+        end = self.request.GET.get("end")
+
+        if (begin is None and end is None) or (begin == "" and end == ""):
+            for bg in context["object_list"]:
+                donations = Donation.objects.filter(blood_group=bg.id).count()
+                requests = Request.objects.filter(blood_group=bg.id).count()
+                bg.donations = donations
+                bg.requests = requests
+            return context
+
+        elif begin is None or begin == "":
+            for bg in context["object_list"]:
+                donations = (
+                    Donation.objects.filter(blood_group=bg.id)
+                    .filter(transfusion_date__lte=end)
+                    .count()
+                )
+                requests = (
+                    Request.objects.filter(blood_group=bg.id)
+                    .filter(transfusion_date__lte=end)
+                    .count()
+                )
+                bg.donations = donations
+                bg.requests = requests
+            return context
+
+        elif end is None or end == "":
+            for bg in context["object_list"]:
+                donations = (
+                    Donation.objects.filter(blood_group=bg.id)
+                    .filter(transfusion_date__gte=begin)
+                    .count()
+                )
+                requests = (
+                    Request.objects.filter(blood_group=bg.id)
+                    .filter(transfusion_date__gte=begin)
+                    .count()
+                )
+                bg.donations = donations
+                bg.requests = requests
+            return context
+
+        else:
+            for bg in context["object_list"]:
+                donations = (
+                    Donation.objects.filter(blood_group=bg.id)
+                    .filter(transfusion_date__range=(begin, end))
+                    .count()
+                )
+                requests = (
+                    Request.objects.filter(blood_group=bg.id)
+                    .filter(transfusion_date__range=(begin, end))
+                    .count()
+                )
+                bg.donations = donations
+                bg.requests = requests
+            return context
 
 
 # Donation Views
