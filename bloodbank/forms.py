@@ -31,5 +31,18 @@ class RequestForm(forms.ModelForm):
         model = Request
         exclude = [
             "id",
-            "transfusion_name",
+            "transfusion_date",
         ]
+
+    def clean_volume(self):
+        blood_group = self.cleaned_data.get("blood_group")
+        available_volume = blood_group.available_volume
+
+        required_volume = self.cleaned_data.get("volume")
+
+        if required_volume > available_volume:
+            raise forms.ValidationError(
+                "This volume is not available of this blood group"
+            )
+
+        return required_volume

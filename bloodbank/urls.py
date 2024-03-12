@@ -1,13 +1,21 @@
 from django.urls import path
 
 from .views import (
+    # General Views
     DashboardView,
     BloodGroupsView,
+    # Donation Views
     DonationListView,
-    DonationDetailView,
     DonationCreateView,
+    DonationDetailView,
     DonationEditView,
     DonationDeleteView,
+    # Request Views
+    RequestListView,
+    RequestCreateView,
+    RequestDetailView,
+    RequestEditView,
+    RequestDeleteView,
 )
 
 # General Urls
@@ -55,5 +63,35 @@ donation_urls = [
 ]
 
 
+# Request Urls
+request_urls = [
+    path(
+        "requests/",
+        RequestListView.as_view(),
+        name="request-list",
+    ),
+    path(
+        "requests/new/",
+        RequestCreateView.as_view(),
+        name="request-new",
+    ),
+    path(
+        "requests/<int:pk>/",
+        RequestDetailView.as_view(),
+        name="request-detail",
+    ),
+    path(
+        "requests/edit/<int:pk>/",
+        RequestEditView.as_view(),
+        name="request-edit",
+    ),
+    path(
+        "requests/delete/<int:pk>/",
+        RequestDeleteView.as_view(),
+        name="request-delete",
+    ),
+]
+
+
 # All
-urlpatterns = general_urls + donation_urls
+urlpatterns = general_urls + donation_urls + request_urls

@@ -1,0 +1,21 @@
+{% extends 'bloodbank/general/_general.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Edit Request{% endblock title %}
+
+{% block path %}Edit Request{% endblock path %}
+
+{% block content %}
+
+<section>
+    <h4 class="page-title mb-4">Edit Request</h4>
+    <form method="post" class="container mt-5 form-content" novalidate>
+        {%csrf_token %}
+        {{form|crispy}}
+        <button class="submit-btn" type="submit">Edit</button>
+    </form>
+</section>
+
+{% endblock content %}

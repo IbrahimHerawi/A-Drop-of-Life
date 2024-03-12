@@ -107,3 +107,6 @@ class Request(models.Model):
 
     def __str__(self):
         return f"{self.patient_name}-{self.blood_group.group_name}"
+
+    def get_absolute_url(self):
+        return reverse("request-detail", kwargs={"pk": self.pk})
