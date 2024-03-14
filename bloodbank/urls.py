@@ -16,6 +16,7 @@ from .views import (
     RequestDetailView,
     RequestEditView,
     RequestDeleteView,
+    StateMaintainingView,
 )
 
 # General Urls
@@ -89,6 +90,11 @@ request_urls = [
         "requests/delete/<int:pk>/",
         RequestDeleteView.as_view(),
         name="request-delete",
+    ),
+    path(
+        "requests/statemaintaining/",
+        StateMaintainingView,
+        name="state-maintaining",
     ),
 ]
 

@@ -25,6 +25,17 @@ class UpdateDonationForm(forms.ModelForm):
             "transfusion_date",
         ]
 
+    def clean_residual_volume(self):
+        residual_volume = self.cleaned_data["residual_volume"]
+        donation_volume = self.cleaned_data["donation_volume"]
+
+        if residual_volume > donation_volume:
+            raise forms.ValidationError(
+                "Residual volume should be either equal to or less than donation volume!"
+            )
+
+        return residual_volume
+
 
 class RequestForm(forms.ModelForm):
     class Meta:
@@ -46,3 +57,37 @@ class RequestForm(forms.ModelForm):
             )
 
         return required_volume
+
+
+class StateMaintainingForm(forms.Form):
+    donor_id = forms.IntegerField(required=True)
+    volume_taken = forms.IntegerField(required=True, max_value=460, min_value=50)
+
+    def clean_donor_id(self):
+        try:
+            donor = Donation.objects.filter(status="1").get(
+                id=self.cleaned_data.get("donor_id")
+            )
+        except:
+            self.add_error("donor_id", "This donor does not exist!")
+            raise forms.ValidationError("")
+
+        return self.cleaned_data.get("donor_id")
+
+    def clean_volume_taken(self):
+
+        volume_taken = self.cleaned_data.get("volume_taken")
+        try:
+            donor = Donation.objects.filter(status="1").get(
+                id=self.cleaned_data.get("donor_id")
+            )
+        except:
+            return volume_taken
+
+        if donor.residual_volume < volume_taken:
+            self.add_error(
+                "volume_taken", "The residual volume of this donor is not enough!!"
+            )
+            raise forms.ValidationError("")
+
+        return volume_taken

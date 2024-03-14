@@ -1,4 +1,4 @@
-from django.db import models
+from django.shortcuts import redirect, render
 from django.views.generic import (
     ListView,
     DetailView,
@@ -17,6 +17,7 @@ from .forms import (
     DonationForm,
     UpdateDonationForm,
     RequestForm,
+    StateMaintainingForm,
 )
 
 
@@ -103,19 +104,19 @@ class DonationListView(ListView):
         status = self.request.GET.get("status")
 
         if query is None:
-            queryset = Donation.objects.all().order_by("-transfusion_date")
+            queryset = Donation.objects.all().order_by("status", "-transfusion_date")
             return queryset
 
         if status == "0":
             queryset = Donation.objects.filter(donor_name__icontains=query).order_by(
-                "-transfusion_date"
+                "status", "-transfusion_date"
             )
             return queryset
 
         queryset = (
             Donation.objects.filter(status__exact=status)
             .filter(donor_name__icontains=query)
-            .order_by("-transfusion_date")
+            .order_by("status", "-transfusion_date")
         )
 
         return queryset
@@ -126,6 +127,19 @@ class DonationCreateView(CreateView):
     template_name = "bloodbank/donation/donation_new.html"
     form_class = DonationForm
     success_url = reverse_lazy("donation-list")
+
+    def form_valid(self, form):
+        cleaned_data = form.cleaned_data
+
+        residual_volume = cleaned_data["donation_volume"]
+
+        donation = form.save(commit=False)
+        donation.residual_volume = residual_volume
+        donation.status = "1"
+
+        donation.save()
+
+        return super().form_valid(form)
 
 
 class DonationDetailView(DetailView):
@@ -168,7 +182,7 @@ class RequestCreateView(CreateView):
     model = Request
     template_name = "bloodbank/request/request_new.html"
     form_class = RequestForm
-    success_url = reverse_lazy("request-list")
+    success_url = reverse_lazy("state-maintaining")
 
 
 class RequestDetailView(DetailView):
@@ -186,3 +200,36 @@ class RequestDeleteView(DeleteView):
     model = Request
     template_name = "bloodbank/request/request_delete.html"
     success_url = reverse_lazy("request-list")
+
+
+def StateMaintainingView(request):
+    if request.method == "POST":
+        form = StateMaintainingForm(request.POST)
+        if "save_and_add_another" in request.POST and form.is_valid():
+            donor_id = form.cleaned_data["donor_id"]
+            donor = Donation.objects.get(id=donor_id)
+            volume_taken = form.cleaned_data["volume_taken"]
+
+            donor.residual_volume = donor.residual_volume - volume_taken
+
+            if donor.residual_volume < 50:
+                donor.status = "2"
+
+            donor.save()
+            form = StateMaintainingForm()
+
+        elif form.is_valid():
+            donor_id = form.cleaned_data["donor_id"]
+            donor = Donation.objects.get(id=donor_id)
+            volume_taken = form.cleaned_data["volume_taken"]
+
+            donor.residual_volume = donor.residual_volume - volume_taken
+
+            if donor.residual_volume < 50:
+                donor.status = "2"
+
+            donor.save()
+            return redirect("request-list")
+    else:
+        form = StateMaintainingForm()
+    return render(request, "bloodbank/request/state_maintaining.html", {"form": form})
