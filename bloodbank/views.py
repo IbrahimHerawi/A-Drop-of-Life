@@ -98,6 +98,7 @@ class BloodGroupsView(ListView):
 class DonationListView(ListView):
     model = Donation
     template_name = "bloodbank/donation/donation_list.html"
+    paginate_by = 5
 
     def get_queryset(self):
         query = self.request.GET.get("q")
@@ -163,6 +164,7 @@ class DonationDeleteView(DeleteView):
 class RequestListView(ListView):
     model = Request
     template_name = "bloodbank/request/request_list.html"
+    paginate_by = 5
 
     def get_queryset(self):
         query = self.request.GET.get("q")

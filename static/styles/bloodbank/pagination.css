@@ -1,0 +1,11 @@
+.page-link {
+    color: var(--clr-theme);
+    font-weight: 500;
+    border-color: var(--clr-theme);
+}
+
+.page-link:hover {
+    background-color: #ff00262a; 
+    color: var(--clr-theme);
+    border: solid 1px var(--clr-theme);
+}

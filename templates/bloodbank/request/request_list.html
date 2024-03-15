@@ -6,6 +6,10 @@
 
 {% block path %}Requests{% endblock path %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/bloodbank/pagination.css' %}">
+{% endblock head %}
+
 {% block content %}
 
 <section>
@@ -60,6 +64,31 @@
         </table>
     </div>
     <!-- Table -->
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages != 1 %}
+    <div class="mt-5">
+        <ul class="pagination">
+
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">first</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+            </li>
+
+            {% endif %}
+            <li class="page-item mx-1 disabled"><a class="page-link">
+                    Page {{ page_obj.number }} of {{page_obj.paginator.num_pages}}
+                </a></li>
+
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+    <!-- Pagination -->
 </section>
 
 {% endblock content %}
