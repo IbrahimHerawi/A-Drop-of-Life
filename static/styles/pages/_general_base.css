@@ -67,6 +67,13 @@
 /* Navbar */
 
 /* Footer */
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 hr {
     border-top: 0.5px solid var(--clr-theme);
     margin-right: 10%;

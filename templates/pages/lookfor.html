@@ -1,0 +1,39 @@
+{% extends "shared/_general_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Look For{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/pages/lookfor.css' %}">
+{% endblock head %}
+
+
+{% block content %}
+
+<!-- lookfor section start -->
+<section id="lookfor-section">
+    <div class="container">
+        <div class="row justify-content-around align-items-center">
+            <div class="col-8 col-md-6">
+                <h4 class="text-center mb-3" style="color: var(--clr-theme);">Looking for a Specific Blood
+                    Group&#63;</h4>
+                <p class="fw-medium lh-base text-center">Enter the blood type and the required volume and we will tell
+                    you if we can
+                    provide it.
+                </p>
+            </div>
+            <div class="col-8 col-md-6 text-center lookfor-form">
+                <form method="post" class="form-content">{% csrf_token %}
+                    {{form|crispy}}
+                    <button class="submit-btn" type="submit">Look For</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<!-- lookfor section end -->
+{% endblock content %}

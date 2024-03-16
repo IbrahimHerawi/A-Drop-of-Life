@@ -1,0 +1,19 @@
+.result {
+    border: solid 1px var(--clr-theme);
+    border-radius: 35px;
+    box-shadow: 0px 0px 4px inset var(--clr-theme);
+    padding: 16px 50px;
+    width: 50%;
+    margin: auto;
+    margin-top: 140px;
+    min-width: 350px;
+
+}
+
+.result h4, .result h5 {
+    color: var(--clr-theme);
+}
+
+.result p {
+    font-weight: 500;
+}
