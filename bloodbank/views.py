@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     ListView,
     DetailView,
@@ -22,9 +23,10 @@ from .forms import (
 
 
 # Dashboard View
-class DashboardView(ListView):
+class DashboardView(LoginRequiredMixin, ListView):
     model = BloodGroup
     template_name = "bloodbank/general/dashboard.html"
+    login_url = "account_login"
 
 
 # Blood Groups View

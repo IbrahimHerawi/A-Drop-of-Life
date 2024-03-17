@@ -79,6 +79,12 @@ class Donation(models.Model):
     def get_absolute_url(self):
         return reverse("donation-detail", kwargs={"pk": self.pk})
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["id"]),
+            models.Index(fields=["status"]),
+        ]
+
 
 # Requests Table
 class Request(models.Model):
