@@ -5,12 +5,27 @@
 
 {% block title %}Edit Donation{% endblock title %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/bloodbank/detail.css' %}">
+{% endblock head %}
+
 {% block path %}Edit Donation{% endblock path %}
 
 {% block content %}
 
 <section>
     <h4 class="page-title mb-4">Edit Donation</h4>
+    <h4 class="label">Name</h4>
+    <p class="data">{{object.donor.donor_name}}</p>
+
+    <h4 class="label">Gender</h4>
+    <p class="data">{{object.donor.donor_gender}}</p>
+
+    <h4 class="label">Blood Group</h4>
+    <p class="data">{{object.blood_group.group_name}}</p>
+
+    <h4 class="label">Age</h4>
+    <p class="data">{{object.donor.age}}</p>
     <form method="post" class="container mt-5 form-content" novalidate>
         {%csrf_token %}
         {{form|crispy}}

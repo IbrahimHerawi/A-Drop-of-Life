@@ -17,8 +17,10 @@
         <div class="mb-4">
             <h4 class="page-title">Donations</h4>
         </div>
-        <div>
-            <a href="{% url 'donation-new' %}" class="general-btn"><i class="fs-6 fa-solid fa-plus"></i> Add New</a>
+        <div class="mb-2">
+            <a href="{% url 'donation-new' %}" class="general-btn"><i class="fs-6 fa-solid fa-plus"></i> New
+                Donation</a>
+            <a href="{% url 'donor-new' %}" class="general-btn"><i class="fs-6 fa-solid fa-plus"></i> New Donor</a>
         </div>
     </div>
 
@@ -27,7 +29,8 @@
         action="{% url 'donation-list' %}" id="donation">
 
         <div class="flex-grow-1">
-            <input type="search" class="form-control" name="q" placeholder="Enter Donor Name!" aria-label="Search">
+            <input type="search" class="form-control" name="q" placeholder="Enter Donor Name or ID Number!"
+                aria-label="Search">
         </div>
         <div class="flex-grow-1 align-items-center justify-content-center d-flex flex-row column-gap-3">
             <div class="form-check">
@@ -59,8 +62,8 @@
     <div class="table-responsive mt-3">
         <table class="table table-hover text-center table-responsive mt-4">
             <thead>
+                <th scope="col">ID Number</th>
                 <th scope="col">Name</th>
-                <th scope="col">Phone</th>
                 <th scope="col">Gender</th>
                 <th scope="col">Age</th>
                 <th scope="col">Blood Group</th>
@@ -71,10 +74,10 @@
             <tbody>
                 {% for d in object_list %}
                 <tr>
-                    <td>{{d.donor_name}}</td>
-                    <td>{{d.donor_phone}}</td>
-                    <td>{{d.donor_gender}}</td>
-                    <td>{{d.donor_age}}</td>
+                    <td>{{d.donor.id_num}}</td>
+                    <td>{{d.donor.donor_name}}</td>
+                    <td>{{d.donor.donor_gender}}</td>
+                    <td>{{d.donor.age}}</td>
                     <td class="text-uppercase">{{d.blood_group.group_name}}</td>
                     <td>{{d.donation_volume}} &dash; ml</td>
                     {% if d.status == '1' %}

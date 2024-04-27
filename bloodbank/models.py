@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from django.core.validators import (
     RegexValidator,
@@ -47,10 +48,13 @@ class BloodGroup(models.Model):
         return self.group_name
 
 
-# Donations Table
-class Donation(models.Model):
-
+# Donor Table
+class Donor(models.Model):
     id = models.AutoField(primary_key=True)
+    id_num = models.CharField(
+        unique=True,
+        validators=[RegexValidator("(^[0-9]{4}-[0-9]{4}-[0-9]{5}$)|(^[0-9]{8}$)")],
+    )
     donor_name = models.CharField(max_length=500)
     donor_phone = models.CharField(
         max_length=13, validators=[RegexValidator("^0093\d{9}")]
@@ -59,11 +63,33 @@ class Donation(models.Model):
     donor_gender = models.CharField(
         max_length=15, choices=(("Male", "Male"), ("Female", "Female"))
     )
-    donor_age = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(18), MaxValueValidator(65)]
-    )
+    donor_date_of_birth = models.DateField()
     donor_address = models.TextField(blank=True, null=True)
     blood_group = models.ForeignKey(BloodGroup, on_delete=models.CASCADE)
+
+    @property
+    def age(self):
+        today = date.today()
+        age = (
+            today.year
+            - self.donor_date_of_birth.year
+            - (
+                (today.month, today.day)
+                < (self.donor_date_of_birth.month, self.donor_date_of_birth.day)
+            )
+        )
+        return age
+
+    def __str__(self):
+        return f"{self.donor_name}-{self.blood_group.group_name}"
+
+    def get_absolute_url(self):
+        return reverse("donor-edit", kwargs={"pk": self.id})
+
+
+# Donations Table
+class Donation(models.Model):
+    id = models.AutoField(primary_key=True)
     donation_volume = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(50), MaxValueValidator(460)]
     )
@@ -72,9 +98,11 @@ class Donation(models.Model):
     )
     transfusion_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=[("1", "Valid"), ("2", "Invalid")])
+    donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
+    blood_group = models.ForeignKey(BloodGroup, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.donor_name}-{self.blood_group.group_name}"
+        return f"{self.donor.donor_name}-{self.blood_group.group_name}"
 
     def get_absolute_url(self):
         return reverse("donation-detail", kwargs={"pk": self.pk})

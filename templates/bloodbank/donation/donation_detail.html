@@ -20,30 +20,18 @@
         <div class="flex-nowrap">
             <a href="{% url 'donation-edit' object.pk %}" class="general-btn">Edit</a>
             <a href="{% url 'donation-delete' object.pk %}" class="general-btn">Delete</a>
+            <a href="{% url 'donor-edit' object.donor.id %}" class="general-btn">Donor</a>
         </div>
     </div>
     <div class="container">
         <h4 class="label">Name</h4>
-        <p class="data">{{object.donor_name}}</p>
-
-        <h4 class="label">Phone</h4>
-        <p class="data">{{object.donor_phone}}</p>
-
-        <h4 class="label">Email</h4>
-        <p class="data">{{object.donor_email}}</p>
+        <p class="data">{{object.donor.donor_name}}</p>
 
         <h4 class="label">Gender</h4>
-        <p class="data">{{object.donor_gender}}</p>
+        <p class="data">{{object.donor.donor_gender}}</p>
 
         <h4 class="label">Age</h4>
-        <p class="data">{{object.donor_age}}</p>
-
-        <h4 class="label">Address</h4>
-        {% if object.donor_address == '' %}
-        <p class="data">Not Available</p>
-        {% else %}
-        <p class="data">{{object.donor_address}}</p>
-        {% endif %}
+        <p class="data">{{object.donor.age}}</p>
 
         <h4 class="label">Blood Group</h4>
         <p class="data">{{object.blood_group.group_name}}</p>

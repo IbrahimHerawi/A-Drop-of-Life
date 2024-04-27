@@ -4,6 +4,10 @@ from .views import (
     # General Views
     DashboardView,
     BloodGroupsView,
+    # Donor Views
+    DonorCreateView,
+    DonorEditView,
+    DonorDeleteView,
     # Donation Views
     DonationListView,
     DonationCreateView,
@@ -30,6 +34,26 @@ general_urls = [
         "bloodgroups/",
         BloodGroupsView.as_view(),
         name="bloodgroups",
+    ),
+]
+
+
+# Donor Urls
+donor_urls = [
+    path(
+        "donor/new/",
+        DonorCreateView.as_view(),
+        name="donor-new",
+    ),
+    path(
+        "donor/edit/<int:pk>/",
+        DonorEditView.as_view(),
+        name="donor-edit",
+    ),
+    path(
+        "donor/delete/<int:pk>/",
+        DonorDeleteView.as_view(),
+        name="donor-delete",
     ),
 ]
 
@@ -100,4 +124,4 @@ request_urls = [
 
 
 # All
-urlpatterns = general_urls + donation_urls + request_urls
+urlpatterns = general_urls + donor_urls + donation_urls + request_urls
