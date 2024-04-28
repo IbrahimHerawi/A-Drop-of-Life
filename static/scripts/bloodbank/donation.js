@@ -3,13 +3,22 @@ document.querySelectorAll('input[type="radio"]').forEach(
         radio.addEventListener('click',
             function() {
                 document.getElementById('donation').submit();
-                sessionStorage.setItem('checked', radio.id);
             }
         )
     }
 )
 
 
-let btn_checked = sessionStorage.getItem('checked');
-document.getElementById(btn_checked).checked = true;
+var params = new URLSearchParams(window.location.search);
+var status_param = params.get('status');
+
+if (status_param === '1'){
+    document.getElementById('statusvalid').checked = true;
+}
+else if (status_param === '2'){
+    document.getElementById('statusinvalid').checked = true;
+}
+else {
+    document.getElementById('statusall').checked = true;
+}
 

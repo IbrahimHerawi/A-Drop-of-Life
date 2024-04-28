@@ -5,6 +5,7 @@ from .views import (
     DashboardView,
     BloodGroupsView,
     # Donor Views
+    DonorListView,
     DonorCreateView,
     DonorEditView,
     DonorDeleteView,
@@ -40,6 +41,11 @@ general_urls = [
 
 # Donor Urls
 donor_urls = [
+    path(
+        "donors/",
+        DonorListView.as_view(),
+        name="donor-list",
+    ),
     path(
         "donor/new/",
         DonorCreateView.as_view(),

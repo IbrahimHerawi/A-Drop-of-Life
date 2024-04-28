@@ -53,7 +53,7 @@
 /* Content */
 
 /* Form Section */
-.form-content input:focus {
+.form-content input:focus, .form-content select:focus{
     box-shadow: 0px 0px 7px var(--clr-theme);    
 }
 

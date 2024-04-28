@@ -10,7 +10,15 @@
 {% block content %}
 
 <section>
-    <h4 class="page-title mb-4">Edit Donor</h4>
+    <div class="d-flex flex-column flex-sm-row justify-content-between mb-4">
+        <div class="mb-4">
+            <h4 class="page-title">Edit Donor</h4>
+        </div>
+        <div class="mb-2">
+            <a href="{% url 'donor-delete' object.pk %}" class="general-btn">
+                Delete Donor</a>
+        </div>
+    </div>
     <form method="post" class="container mt-5 form-content" novalidate>
         {%csrf_token %}
         {{form|crispy}}

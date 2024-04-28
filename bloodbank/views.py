@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -42,15 +43,60 @@ class BloodGroupsView(ListView):
         begin = self.request.GET.get("begin")
         end = self.request.GET.get("end")
         gender = self.request.GET.get("gender")
-
-        if gender != "0" or gender is not None:
+        if gender and gender != "all":
             donations_queryset = Donation.objects.filter(donor__donor_gender=gender)
             requests_queryset = Request.objects.filter(patient_gender=gender)
         else:
             donations_queryset = Donation.objects.all()
             requests_queryset = Request.objects.all()
 
-        if (begin is None and end is None) or (begin == "" and end == ""):
+        if begin and end:
+            for bg in context["object_list"]:
+                donations = (
+                    donations_queryset.filter(blood_group=bg.id)
+                    .filter(transfusion_date__range=(begin, end))
+                    .count()
+                )
+
+                requests = (
+                    requests_queryset.filter(blood_group=bg.id)
+                    .filter(transfusion_date__range=(begin, end))
+                    .count()
+                )
+                bg.donations = donations
+                bg.requests = requests
+            return context
+        elif begin:
+            for bg in context["object_list"]:
+                donations = (
+                    donations_queryset.filter(blood_group=bg.id)
+                    .filter(transfusion_date__gte=begin)
+                    .count()
+                )
+                requests = (
+                    requests_queryset.filter(blood_group=bg.id)
+                    .filter(transfusion_date__gte=begin)
+                    .count()
+                )
+                bg.donations = donations
+                bg.requests = requests
+            return context
+        elif end:
+            for bg in context["object_list"]:
+                donations = (
+                    donations_queryset.filter(blood_group=bg.id)
+                    .filter(transfusion_date__lte=end)
+                    .count()
+                )
+                requests = (
+                    requests_queryset.filter(blood_group=bg.id)
+                    .filter(transfusion_date__lte=end)
+                    .count()
+                )
+                bg.donations = donations
+                bg.requests = requests
+            return context
+        else:
             for bg in context["object_list"]:
                 donations = donations_queryset.filter(blood_group=bg.id).count()
                 requests = requests_queryset.filter(blood_group=bg.id).count()
@@ -58,56 +104,35 @@ class BloodGroupsView(ListView):
                 bg.requests = requests
             return context
 
-        elif begin is None or begin == "":
-            for bg in context["object_list"]:
-                donations = (
-                    donations_queryset.filter(blood_group=bg.id)
-                    .filter(transfusion_date__lte=end)
-                    .count()
-                )
-                requests = (
-                    requests_queryset.filter(blood_group=bg.id)
-                    .filter(transfusion_date__lte=end)
-                    .count()
-                )
-                bg.donations = donations
-                bg.requests = requests
-            return context
-
-        elif end is None or end == "":
-            for bg in context["object_list"]:
-                donations = (
-                    donations_queryset.filter(blood_group=bg.id)
-                    .filter(transfusion_date__gte=begin)
-                    .count()
-                )
-                requests = (
-                    requests_queryset.filter(blood_group=bg.id)
-                    .filter(transfusion_date__gte=begin)
-                    .count()
-                )
-                bg.donations = donations
-                bg.requests = requests
-            return context
-
-        else:
-            for bg in context["object_list"]:
-                donations = (
-                    donations_queryset.filter(blood_group=bg.id)
-                    .filter(transfusion_date__range=(begin, end))
-                    .count()
-                )
-                requests = (
-                    requests_queryset.filter(blood_group=bg.id)
-                    .filter(transfusion_date__range=(begin, end))
-                    .count()
-                )
-                bg.donations = donations
-                bg.requests = requests
-            return context
-
 
 # Donor Views
+class DonorListView(ListView):
+    model = Donor
+    template_name = "bloodbank/donor/donor_list.html"
+    paginate_by = 5
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        bloodgroup = self.request.GET.get("bg")
+
+        if query is None:
+            queryset = Donor.objects.all().order_by("-id")
+            return queryset
+
+        if query and query != "":
+            queryset = Donor.objects.filter(id_num=query)
+            return queryset
+
+        if bloodgroup == "all":
+            queryset = Donor.objects.all().order_by("-id")
+            return queryset
+
+        queryset = Donor.objects.filter(blood_group__group_name=bloodgroup).order_by(
+            "-id"
+        )
+        return queryset
+
+
 class DonorCreateView(CreateView):
     model = Donor
     template_name = "bloodbank/donor/donor_new.html"
@@ -145,16 +170,18 @@ class DonationListView(ListView):
 
         if status == "0":
             queryset = (
-                Donation.objects.select_related("donor")
-                .filter(Q(donor__donor_name__icontains=query) | Q(donor__id_num=query))
+                Donation.objects.filter(
+                    Q(donor__donor_name__icontains=query) | Q(donor__id_num=query)
+                )
+                .select_related("donor")
                 .order_by("status", "-transfusion_date")
             )
             return queryset
 
         queryset = (
-            Donation.objects.select_related("donor")
-            .filter(status__exact=status)
+            Donation.objects.filter(status__exact=status)
             .filter(Q(donor__donor_name__icontains=query) | Q(donor__id_num=query))
+            .select_related("donor")
             .order_by("status", "-transfusion_date")
         )
 
