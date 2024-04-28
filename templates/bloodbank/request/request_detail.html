@@ -23,27 +23,18 @@
         </div>
     </div>
     <div class="container">
+
+        <h4 class="label">ID Number</h4>
+        <p class="data">{{object.patient.id_num}}</p>
+
         <h4 class="label">Name</h4>
-        <p class="data">{{object.patient_name}}</p>
-
-        <h4 class="label">Phone</h4>
-        <p class="data">{{object.patient_phone}}</p>
-
-        <h4 class="label">Email</h4>
-        <p class="data">{{object.patient_email}}</p>
+        <p class="data">{{object.patient.patient_name}}</p>
 
         <h4 class="label">Gender</h4>
-        <p class="data">{{object.patient_gender}}</p>
+        <p class="data">{{object.patient.patient_gender}}</p>
 
         <h4 class="label">Age</h4>
-        <p class="data">{{object.patient_age}}</p>
-
-        <h4 class="label">Address</h4>
-        {% if object.patient_address == '' %}
-        <p class="data">Not Available</p>
-        {% else %}
-        <p class="data">{{object.patient_address}}</p>
-        {% endif %}
+        <p class="data">{{object.patient.age}}</p>
 
         <h4 class="label">Blood Group</h4>
         <p class="data">{{object.blood_group.group_name}}</p>
@@ -53,14 +44,6 @@
 
         <h4 class="label">Trnasfusion Date</h4>
         <p class="data">{{object.transfusion_date}}</p>
-
-        <h4 class="label">Physician Name</h4>
-        {% if object.physician_name == Null %}
-        <p class="data">Not Available</p>
-        {% else %}
-        <p class="data">{{object.physician_name}}</p>
-        {% endif %}
-
     </div>
 </section>
 

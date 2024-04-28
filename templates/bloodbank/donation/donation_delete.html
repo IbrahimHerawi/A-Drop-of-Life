@@ -17,11 +17,18 @@
     <form method="post" class="container mt-5">
         {%csrf_token %}
         <h6>Are you sure you want to delete this donation permanently &quest;</h6>
+
+        <h4 class="label">Donation ID</h4>
+        <p class="data">{{object.id}}</p>
+
         <h4 class="label">Name</h4>
         <p class="data">{{object.donor.donor_name}}</p>
 
         <h4 class="label">Blood Group</h4>
         <p class="data">{{object.blood_group.group_name}}</p>
+
+        <h4 class="label">Donation Volume</h4>
+        <p class="data">{{object.donation_volume}} &dash; ml</p>
 
         <h4 class="label">Status</h4>
         {% if object.status == '1' %}

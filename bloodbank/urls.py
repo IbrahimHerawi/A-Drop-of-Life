@@ -15,6 +15,11 @@ from .views import (
     DonationDetailView,
     DonationEditView,
     DonationDeleteView,
+    # Patient Views
+    PatientListView,
+    PatientCreateView,
+    PatientEditView,
+    PatientDeleteView,
     # Request Views
     RequestListView,
     RequestCreateView,
@@ -94,6 +99,30 @@ donation_urls = [
 ]
 
 
+# Patient Urls
+patient_urls = [
+    path(
+        "patients/",
+        PatientListView.as_view(),
+        name="patient-list",
+    ),
+    path(
+        "patient/new/",
+        PatientCreateView.as_view(),
+        name="patient-new",
+    ),
+    path(
+        "patient/edit/<int:pk>/",
+        PatientEditView.as_view(),
+        name="patient-edit",
+    ),
+    path(
+        "patient/delete/<int:pk>/",
+        PatientDeleteView.as_view(),
+        name="patient-delete",
+    ),
+]
+
 # Request Urls
 request_urls = [
     path(
@@ -130,4 +159,4 @@ request_urls = [
 
 
 # All
-urlpatterns = general_urls + donor_urls + donation_urls + request_urls
+urlpatterns = general_urls + donor_urls + donation_urls + patient_urls + request_urls

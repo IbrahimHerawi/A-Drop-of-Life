@@ -2,54 +2,47 @@
 
 {% load static %}
 
-{% block title %}Donations{% endblock title %}
+{% block title %}Patients{% endblock title %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'styles/bloodbank/pagination.css' %}">
 {% endblock head %}
 
-{% block path %}Donations{% endblock path %}
+{% block path %}Patients{% endblock path %}
 
 {% block content %}
 
 <section>
     <div class="d-flex flex-column flex-sm-row justify-content-between mb-4">
         <div class="mb-4">
-            <h4 class="page-title">Donations</h4>
+            <h4 class="page-title">Patients</h4>
         </div>
         <div class="mb-2">
-            <a href="{% url 'donation-new' %}" class="general-btn"><i class="fs-6 fa-solid fa-plus"></i> New
-                Donation</a>
+            <a href="{% url 'patient-new' %}" class="general-btn"><i class="fs-6 fa-solid fa-plus"></i> New
+                Patient</a>
         </div>
     </div>
 
     <!-- Search Form -->
     <form class="d-flex flex-column flex-lg-row justify-content-between form-content row-gap-4" method="get"
-        action="{% url 'donation-list' %}" id="donation">
+        action="{% url 'patient-list' %}" id="patient">
 
-        <div class="flex-grow-1">
-            <input type="search" class="form-control" name="q" placeholder="Enter Donor Name or ID Number!"
+        <div class="flex-grow-1 pe-lg-4 ">
+            <input type="search" class="form-control" name="q" placeholder="Enter Patient ID Number!"
                 aria-label="Search">
         </div>
-        <div class="flex-grow-1 align-items-center justify-content-center d-flex flex-row column-gap-3">
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="status" id="statusall" value="0">
-                <label class="form-check-label" for="statusall">
-                    All
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="status" id="statusvalid" value="1">
-                <label class="form-check-label" for="statusvalid">
-                    Valid
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="status" id="statusinvalid" value="2">
-                <label class="form-check-label" for="statusinvalid">
-                    Invalid
-                </label>
-            </div>
+        <div class="flex-grow-1">
+            <select class="form-control" name="bg" id="bg">
+                <option value="all">All Blood Groups</option>
+                <option value="o+">O+</option>
+                <option value="o-">O-</option>
+                <option value="ab+">AB+</option>
+                <option value="ab-">AB-</option>
+                <option value="a+">A+</option>
+                <option value="a-">A-</option>
+                <option value="b+">B+</option>
+                <option value="b-">B-</option>
+            </select>
         </div>
         <div class="flex-grow-1 text-center">
             <input type="submit" class="submit-btn flex-grow-1 w-75" value="Search">
@@ -61,28 +54,26 @@
     <div class="table-responsive mt-3">
         <table class="table table-hover text-center table-responsive mt-4">
             <thead>
-                <th scope="col">Donor ID Number</th>
+                <th scope="col">ID Number</th>
                 <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Age</th>
                 <th scope="col">Blood Group</th>
-                <th scope="col">Donation Volume</th>
-                <th scope="col">Residual Volume</th>
-                <th scope="col">Status</th>
                 <th scope="col"></th>
             </thead>
             <tbody>
                 {% for d in object_list %}
                 <tr>
-                    <td>{{d.donor.id_num}}</td>
-                    <td>{{d.donor.donor_name}}</td>
+                    <td>{{d.id_num}}</td>
+                    <td>{{d.patient_name}}</td>
+                    <td>{{d.patient_phone}}</td>
+                    <td>{{d.patient_email}}</td>
+                    <td>{{d.patient_gender}}</td>
+                    <td>{{d.age}}</td>
                     <td class="text-uppercase">{{d.blood_group.group_name}}</td>
-                    <td>{{d.donation_volume}} &dash; ml</td>
-                    <td>{{d.residual_volume}} &dash; ml</td>
-                    {% if d.status == '1' %}
-                    <td>Valid</td>
-                    {% else %}
-                    <td>Invalid</td>
-                    {% endif %}
-                    <td><a href="{% url 'donation-detail' d.pk %}" style="color: var(--clr-theme);">Details</a></td>
+                    <td><a href="{% url 'patient-edit' d.pk %}" style="color: var(--clr-theme);">Edit</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -120,5 +111,5 @@
 {% endblock content %}
 
 {% block script %}
-<script src="{% static 'scripts/bloodbank/donation.js' %}"></script>
+<script src="{% static 'scripts/bloodbank/patients.js' %}"></script>
 {% endblock script %}

@@ -80,6 +80,11 @@ class Donor(models.Model):
         )
         return age
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["id_num"]),
+        ]
+
     def __str__(self):
         return f"{self.donor_name}-{self.blood_group.group_name}"
 
@@ -114,9 +119,13 @@ class Donation(models.Model):
         ]
 
 
-# Requests Table
-class Request(models.Model):
+# Patients Table
+class Patient(models.Model):
     id = models.AutoField(primary_key=True)
+    id_num = models.CharField(
+        unique=True,
+        validators=[RegexValidator("(^[0-9]{4}-[0-9]{4}-[0-9]{5}$)|(^[0-9]{8}$)")],
+    )
     patient_name = models.CharField(max_length=500)
     patient_phone = models.CharField(
         max_length=13, validators=[RegexValidator("^0093\d{9}")]
@@ -125,15 +134,45 @@ class Request(models.Model):
     patient_gender = models.CharField(
         max_length=15, choices=(("Male", "Male"), ("Female", "Female"))
     )
-    patient_age = models.PositiveSmallIntegerField(validators=[MaxValueValidator(150)])
+    patient_date_of_birth = models.DateField()
     patient_address = models.TextField(blank=True, null=True)
     blood_group = models.ForeignKey(BloodGroup, on_delete=models.CASCADE)
-    volume = models.PositiveSmallIntegerField()
-    transfusion_date = models.DateTimeField(auto_now_add=True)
-    physician_name = models.CharField(max_length=500, blank=True, null=True)
+
+    @property
+    def age(self):
+        today = date.today()
+        age = (
+            today.year
+            - self.patient_date_of_birth.year
+            - (
+                (today.month, today.day)
+                < (self.patient_date_of_birth.month, self.patient_date_of_birth.day)
+            )
+        )
+        return age
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["id_num"]),
+        ]
 
     def __str__(self):
         return f"{self.patient_name}-{self.blood_group.group_name}"
+
+    def get_absolute_url(self):
+        return reverse("patient-edit", kwargs={"pk": self.id})
+
+
+# Requests Table
+class Request(models.Model):
+    id = models.AutoField(primary_key=True)
+    blood_group = models.ForeignKey(BloodGroup, on_delete=models.CASCADE)
+    volume = models.PositiveSmallIntegerField()
+    transfusion_date = models.DateTimeField(auto_now_add=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.patient.patient_name}-{self.blood_group.group_name}"
 
     def get_absolute_url(self):
         return reverse("request-detail", kwargs={"pk": self.pk})

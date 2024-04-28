@@ -4,6 +4,7 @@ from .models import (
     BloodGroup,
     Donor,
     Donation,
+    Patient,
     Request,
 )
 
@@ -11,4 +12,5 @@ from .models import (
 admin.site.register(BloodGroup)
 admin.site.register(Donor)
 admin.site.register(Donation)
+admin.site.register(Patient)
 admin.site.register(Request)

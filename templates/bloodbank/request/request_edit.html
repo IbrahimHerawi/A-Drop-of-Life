@@ -5,12 +5,26 @@
 
 {% block title %}Edit Request{% endblock title %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/bloodbank/detail.css' %}">
+{% endblock head %}
+
 {% block path %}Edit Request{% endblock path %}
 
 {% block content %}
 
 <section>
     <h4 class="page-title mb-4">Edit Request</h4>
+
+    <h4 class="label">Patient ID Number</h4>
+    <p class="data">{{object.patient.id_num}}</p>
+
+    <h4 class="label">Name</h4>
+    <p class="data">{{object.patient.patient_name}}</p>
+
+    <h4 class="label">Gender</h4>
+    <p class="data">{{object.patient.patient_gender}}</p>
+
     <form method="post" class="container mt-5 form-content" novalidate>
         {%csrf_token %}
         {{form|crispy}}

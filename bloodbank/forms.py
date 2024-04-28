@@ -7,6 +7,7 @@ from django.core.validators import (
 from .models import (
     Donor,
     Donation,
+    Patient,
     Request,
 )
 
@@ -50,11 +51,11 @@ class DonationForm(forms.ModelForm):
         ]
 
     def clean(self):
-        donor = self.cleaned_data["donor_id"]
+        donor_id = self.cleaned_data.get("donor_id")
         donation_bg = self.cleaned_data.get("blood_group")
 
         try:
-            donor = Donor.objects.get(id_num=donor)
+            donor = Donor.objects.get(id_num=donor_id)
         except:
             raise forms.ValidationError("This donor does not exist!")
 
@@ -93,57 +94,96 @@ class UpdateDonationForm(forms.ModelForm):
         return residual_volume
 
 
+class PatientForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        exclude = ["id"]
+        labels = {
+            "id_num": "ID Number",
+            "patient_date_of_birth": "Date of Birth",
+        }
+        widgets = {"patient_date_of_birth": forms.DateInput(attrs={"type": "date"})}
+
+
 class RequestForm(forms.ModelForm):
+    patient_id = forms.CharField(
+        label="Patient ID Number",
+        validators=[RegexValidator("(^[0-9]{4}-[0-9]{4}-[0-9]{5}$)|(^[0-9]{8}$)")],
+    )
+
     class Meta:
         model = Request
         exclude = [
             "id",
             "transfusion_date",
+            "patient",
         ]
 
-    def clean_volume(self):
-        blood_group = self.cleaned_data.get("blood_group")
-        available_volume = blood_group.available_volume
+    def clean(self):
+        patient_id = self.cleaned_data["patient_id"]
+        volume = self.cleaned_data["volume"]
+        bloodgroup = self.cleaned_data["blood_group"]
 
-        required_volume = self.cleaned_data.get("volume")
+        try:
+            patient = Patient.objects.get(id_num=patient_id)
+        except:
+            raise forms.ValidationError("This patient does not exist!")
 
-        if required_volume > available_volume:
+        if patient.blood_group != bloodgroup:
+            raise forms.ValidationError(
+                "Patient's blood group is not of this blood group!"
+            )
+
+        if bloodgroup.available_volume < volume:
             raise forms.ValidationError(
                 "This volume is not available of this blood group"
             )
 
-        return required_volume
+        return super().clean()
+
+
+class RequestUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ["volume", "blood_group"]
+
+    def clean(self):
+        patient_id = self.cleaned_data["patient_id"]
+        volume = self.cleaned_data["volume"]
+        bloodgroup = self.cleaned_data["blood_group"]
+
+        try:
+            patient = Patient.objects.get(id_num=patient_id)
+        except:
+            raise forms.ValidationError("This patient does not exist!")
+
+        if patient.blood_group != bloodgroup:
+            raise forms.ValidationError(
+                "Patient's blood group is not of this blood group!"
+            )
+
+        if bloodgroup.available_volume < volume:
+            raise forms.ValidationError(
+                "This volume is not available of this blood group"
+            )
+
+        return super().clean()
 
 
 class StateMaintainingForm(forms.Form):
     donation_id = forms.IntegerField(required=True)
     volume_taken = forms.IntegerField(required=True, max_value=460, min_value=50)
 
-    def clean_donor_id(self):
+    def clean(self):
         try:
-            donor = Donation.objects.filter(status="1").get(
-                id=self.cleaned_data.get("donor_id")
+            donation = Donation.objects.filter(status="1").get(
+                id=self.cleaned_data.get("donation_id")
             )
         except:
-            self.add_error("donor_id", "This donor does not exist!")
-            raise forms.ValidationError("")
+            raise forms.ValidationError("This donation does not exist!")
 
-        return self.cleaned_data.get("donor_id")
-
-    def clean_volume_taken(self):
-
-        volume_taken = self.cleaned_data.get("volume_taken")
-        try:
-            donor = Donation.objects.filter(status="1").get(
-                id=self.cleaned_data.get("donor_id")
+        if donation.residual_volume < self.cleaned_data["volume_taken"]:
+            raise forms.ValidationError(
+                "The residual volume of this donation is not enough!!"
             )
-        except:
-            return volume_taken
-
-        if donor.residual_volume < volume_taken:
-            self.add_error(
-                "volume_taken", "The residual volume of this donor is not enough!!"
-            )
-            raise forms.ValidationError("")
-
-        return volume_taken
+        return super().clean()

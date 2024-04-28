@@ -57,6 +57,10 @@
     box-shadow: 0px 0px 7px var(--clr-theme);    
 }
 
+option:hover{
+    background-color: black;
+}
+
 .form-content label {
     color: var(--clr-theme);
     font-weight: 500;

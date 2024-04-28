@@ -4,7 +4,8 @@
 }
 
 :root {
-    --clr-theme: #ff0026;
+    /* --clr-theme: #ff0026; */
+    --clr-theme: #9b0017;
 }
 
 /* Navbar */
@@ -53,7 +54,7 @@
 }
 
 .nav-link{
-    color: #ff0026c0;
+    color: #9b0017;
     font-weight: 500;
     transition: 0.3s color background-color;
     border-radius: 100px;
